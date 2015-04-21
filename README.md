@@ -1,5 +1,7 @@
 # OpenAperture.WorkflowOrchestratorApi
 
+[![Build Status](https://semaphoreci.com/api/v1/projects/ac149a06-88e2-460e-b4b2-bad6440ee926/404672/badge.svg)](https://semaphoreci.com/perceptive/workflow_orchestrator_api)
+
 This reusable Elixir messaging library provides an application for interacting with the WorkflowOrchestrator system module.  It provides the following features:
 
 * Provides a Publisher to send events to the Notifications module
