@@ -1,0 +1,43 @@
+defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.PublisherTest do
+  use ExUnit.Case
+
+  alias OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher
+  alias OpenAperture.Messaging.ConnectionOptionsResolver
+  alias OpenAperture.Messaging.AMQP.ConnectionOptions, as: AMQPConnectionOptions
+
+  alias OpenAperture.Messaging.AMQP.QueueBuilder
+  alias OpenAperture.Messaging.AMQP.ConnectionPool
+  alias OpenAperture.Messaging.AMQP.ConnectionPools
+
+  #=========================
+  # handle_cast({:hipchat, payload}) tests
+
+  test "handle_cast({:hipchat, payload}) - success" do
+  	:meck.new(ConnectionPools, [:passthrough])
+  	:meck.expect(ConnectionPools, :get_pool, fn _ -> %{} end)
+
+  	:meck.new(ConnectionPool, [:passthrough])
+  	:meck.expect(ConnectionPool, :publish, fn _, _, _, _ -> :ok end)
+
+    :meck.new(QueueBuilder, [:passthrough])
+    :meck.expect(QueueBuilder, :build, fn _,_,_ -> %OpenAperture.Messaging.Queue{name: ""} end)      
+
+    :meck.new(ConnectionOptionsResolver, [:passthrough])
+    :meck.expect(ConnectionOptionsResolver, :get_for_broker, fn _, _ -> %AMQPConnectionOptions{} end)
+
+  	state = %{
+  	}
+
+  	payload = %{
+			is_success: true,
+			prefix: "[Test Prefix]",
+			message: "testing message"	
+  	}
+    assert Publisher.handle_cast({:hipchat, "1", "1", payload}, state) == {:noreply, state}
+  after
+  	:meck.unload(ConnectionPool)
+  	:meck.unload(ConnectionPools)
+    :meck.unload(QueueBuilder)
+    :meck.unload(ConnectionOptionsResolver)        
+  end
+end
