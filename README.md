@@ -17,7 +17,6 @@ The Workflow module can be used to interact with the payload from a Workflow Orc
 ```iex
 request = OpenAperture.WorkflowOrchestratorApi.Request.from_payload(payload)
 OpenAperture.WorkflowOrchestratorApi.Workflow.step_completed(request)
-])
 ```
 
 ## Module Configuration
