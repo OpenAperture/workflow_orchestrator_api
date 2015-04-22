@@ -88,7 +88,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
 
   test "publish_success_notification" do
   	:meck.new(NotificationsPublisher, [:passthrough])
-  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _ -> :ok end)
+  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _,_ -> :ok end)
 
   	request = %Request{
   		workflow: %Workflow{
@@ -108,7 +108,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
 
   test "publish_failure_notification" do
   	:meck.new(NotificationsPublisher, [:passthrough])
-  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _ -> :ok end)
+  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _,_ -> :ok end)
 
   	request = %Request{
   		workflow: %Workflow{
@@ -128,7 +128,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
 
   test "send_notification" do
   	:meck.new(NotificationsPublisher, [:passthrough])
-  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _ -> :ok end)
+  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _,_ -> :ok end)
 
   	request = %Request{
   		workflow: %Workflow{
@@ -163,7 +163,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
 
   test "step_failed" do
   	:meck.new(NotificationsPublisher, [:passthrough])
-  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _ -> :ok end)
+  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _,_ -> :ok end)
 
   	:meck.new(WorkflowOrchestratorPublisher, [:passthrough])
   	:meck.expect(WorkflowOrchestratorPublisher, :execute_orchestration, fn _ -> :ok end)
@@ -183,7 +183,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
 
   test "step_completed" do
   	:meck.new(NotificationsPublisher, [:passthrough])
-  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _ -> :ok end)
+  	:meck.expect(NotificationsPublisher, :hipchat_notification, fn _, _, _, _, _,_ -> :ok end)
 
   	:meck.new(WorkflowOrchestratorPublisher, [:passthrough])
   	:meck.expect(WorkflowOrchestratorPublisher, :execute_orchestration, fn _ -> :ok end)

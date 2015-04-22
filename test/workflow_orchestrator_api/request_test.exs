@@ -14,7 +14,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
 	  	notifications_broker_id: "notifications_broker_id",
 	  	docker_build_etcd_token: "docker_build_etcd_token",
 	  	etcd_token: "etcd_token",
-	  	deployable_units: "deployable_units"
+	  	deployable_units: "deployable_units",
+      notifications_config: "notifications_config",
   	}
 
     request = Request.from_payload(payload)
@@ -29,6 +30,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request.docker_build_etcd_token == payload[:docker_build_etcd_token]
     assert request.etcd_token == payload[:etcd_token]
     assert request.deployable_units == payload[:deployable_units] 
+    assert request.notifications_config == payload[:notifications_config] 
   end
 
   test "to_payload" do
@@ -41,7 +43,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
 	  	notifications_broker_id: "notifications_broker_id",
 	  	docker_build_etcd_token: "docker_build_etcd_token",
 	  	etcd_token: "etcd_token",
-	  	deployable_units: "deployable_units"
+	  	deployable_units: "deployable_units",
+      notifications_config: "notifications_config",
   	}
 
     payload = Request.to_payload(request)
@@ -55,5 +58,6 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request.docker_build_etcd_token == payload[:docker_build_etcd_token]
     assert request.etcd_token == payload[:etcd_token]
     assert request.deployable_units == payload[:deployable_units] 
+    assert request.notifications_config == payload[:notifications_config] 
   end  
 end

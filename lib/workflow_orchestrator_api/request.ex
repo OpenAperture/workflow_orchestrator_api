@@ -15,7 +15,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	notifications_broker_id: nil,
   	docker_build_etcd_token: nil,
   	etcd_token: nil,
-  	deployable_units: nil
+  	deployable_units: nil,
+    notifications_config: nil
 
   @type t :: %__MODULE__{}
 
@@ -42,7 +43,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 	  	workflow_orchestration_broker_id: payload[:workflow_orchestration_broker_id],
 	  	docker_build_etcd_token: payload[:docker_build_etcd_token],
 	  	etcd_token: payload[:etcd_token],
-	  	deployable_units: payload[:deployable_units]
+	  	deployable_units: payload[:deployable_units],
+      notifications_config: payload[:notifications_config],
     }
   end
 
@@ -73,6 +75,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	payload = Map.put(payload, :docker_build_etcd_token, request.docker_build_etcd_token)
   	payload = Map.put(payload, :etcd_token, request.etcd_token)
   	payload = Map.put(payload, :deployable_units, request.deployable_units)
+    payload = Map.put(payload, :notifications_config, request.notifications_config)
 
   	payload
   end

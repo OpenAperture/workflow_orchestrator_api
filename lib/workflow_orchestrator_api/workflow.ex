@@ -133,7 +133,13 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 	def send_notification(request, is_success, message) do
 		prefix = "[OpenAperture Workflow][#{request.workflow.workflow_id}]"
     Logger.debug("#{prefix} #{message}")
-    NotificationsPublisher.hipchat_notification(request.notifications_exchange_id, request.notifications_broker_id, is_success, prefix, message)
+
+    hipchat_room_names = if request.notifications_config != nil do
+      request.notifications_config["hipchat"]["room_names"]
+    else
+      []
+    end
+    NotificationsPublisher.hipchat_notification(request.notifications_exchange_id, request.notifications_broker_id, is_success, prefix, message, hipchat_room_names)
     add_event_to_log(request, message, prefix)
 	end
 
