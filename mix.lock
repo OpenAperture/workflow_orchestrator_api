@@ -3,7 +3,7 @@
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "27a1efed075ce6913385d87fb5eafe90cef4b776", []},
   "exactor": {:hex, :exactor, "2.1.2"},
   "exjsx": {:hex, :exjsx, "3.1.0"},
-  "exvcr": {:git, "git://github.com/parroty/exvcr.git", "39fea54c38ea3c8a1a0e790c02a6c8d403fcccd7", []},
+  "exvcr": {:git, "git://github.com/parroty/exvcr.git", "8ca24fcb0af3a26d16c848466977532633575f77", []},
   "hackney": {:hex, :hackney, "1.1.0"},
   "hoedown": {:git, "git://github.com/hoedown/hoedown.git", "365ad578e7b767ffe7126f029c184d727a3e95b3", []},
   "httpoison": {:hex, :httpoison, "0.6.2"},

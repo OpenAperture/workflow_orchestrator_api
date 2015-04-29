@@ -131,7 +131,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   """
   @spec send_notification(Request.t, term, String.t()) :: Request.t
 	def send_notification(request, is_success, message) do
-		prefix = "[OpenAperture Workflow][#{request.workflow.workflow_id}]"
+		prefix = "[OpenAperture Workflow][#{request.workflow.id}]"
     Logger.debug("#{prefix} #{message}")
 
     hipchat_room_names = if request.notifications_config != nil do
@@ -161,7 +161,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   @spec add_event_to_log(Request.t, String.t(), String.t()) :: Request.t
   def add_event_to_log(request, event, prefix \\ nil) do
     if (prefix == nil) do
-      prefix = "[OpenAperture Workflow][#{request.workflow.workflow_id}]"
+      prefix = "[OpenAperture Workflow][#{request.workflow.id}]"
     end
 
     event_log = request.workflow.event_log
