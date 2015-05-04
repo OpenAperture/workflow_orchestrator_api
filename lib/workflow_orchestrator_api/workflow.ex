@@ -25,6 +25,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 				    workflow_step_durations: nil,
 				    workflow_error: nil,
 				    workflow_completed: nil,
+            workflow_start_time: nil,
+            step_time: nil,
 				    event_log: nil
 
   @type t :: %__MODULE__{}
@@ -58,7 +60,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
       workflow_step_durations: payload[:workflow_step_durations],
       workflow_error: payload[:workflow_error],
       workflow_completed: payload[:workflow_completed],
-      event_log: payload[:event_log]
+      event_log: payload[:event_log],
+      workflow_start_time: payload[:workflow_start_time],
+      step_time: payload[:step_time]
     }
   end
 
