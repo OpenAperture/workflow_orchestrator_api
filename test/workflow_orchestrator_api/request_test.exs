@@ -7,6 +7,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
   test "from_payload" do
   	payload = %{
 	  	force_build: false,
+      build_messaging_exchange_id: 123,
+      deploy_messaging_exchange_id: 234,
 	  	orchestration_queue_name: "orchestration_queue_name",
 	  	workflow_orchestration_exchange_id: "workflow_orchestration_exchange_id",
 	  	workflow_orchestration_broker_id: "workflow_orchestration_broker_id",
@@ -22,6 +24,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request != nil
     assert request.workflow != nil
     assert request.force_build == payload[:force_build]
+    assert request.build_messaging_exchange_id == payload[:build_messaging_exchange_id]
+    assert request.deploy_messaging_exchange_id == payload[:deploy_messaging_exchange_id]
     assert request.orchestration_queue_name == payload[:orchestration_queue_name]
     assert request.workflow_orchestration_exchange_id == payload[:workflow_orchestration_exchange_id]
     assert request.workflow_orchestration_broker_id == payload[:workflow_orchestration_broker_id]
@@ -36,6 +40,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
   test "to_payload" do
   	request = %Request{
 	  	force_build: false,
+      build_messaging_exchange_id: 123,
+      deploy_messaging_exchange_id: 234,      
 	  	orchestration_queue_name: "orchestration_queue_name",
 	  	workflow_orchestration_exchange_id: "workflow_orchestration_exchange_id",
 	  	workflow_orchestration_broker_id: "workflow_orchestration_broker_id",
@@ -50,6 +56,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     payload = Request.to_payload(request)
     assert payload != nil
     assert request.force_build == payload[:force_build]
+    assert request.build_messaging_exchange_id == payload[:build_messaging_exchange_id]
+    assert request.deploy_messaging_exchange_id == payload[:deploy_messaging_exchange_id]
     assert request.orchestration_queue_name == payload[:orchestration_queue_name]
     assert request.workflow_orchestration_exchange_id == payload[:workflow_orchestration_exchange_id]
     assert request.workflow_orchestration_broker_id == payload[:workflow_orchestration_broker_id]

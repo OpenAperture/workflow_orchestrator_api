@@ -8,6 +8,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 
   defstruct workflow: nil,
   	force_build: nil,
+    build_messaging_exchange_id: nil,
+    deploy_messaging_exchange_id: nil,    
   	orchestration_queue_name: nil,
   	workflow_orchestration_exchange_id: nil,
   	workflow_orchestration_broker_id: nil,
@@ -49,6 +51,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	%OpenAperture.WorkflowOrchestratorApi.Request{
   		workflow: Workflow.from_payload(payload),
   		force_build: payload[:force_build],
+      build_messaging_exchange_id: payload[:build_messaging_exchange_id],
+      deploy_messaging_exchange_id: payload[:deploy_messaging_exchange_id],      
 	  	orchestration_queue_name: payload[:orchestration_queue_name],
 	  	notifications_exchange_id: payload[:notifications_exchange_id],
 	  	notifications_broker_id: payload[:notifications_broker_id],
@@ -57,7 +61,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 	  	docker_build_etcd_token: payload[:docker_build_etcd_token],
 	  	etcd_token: payload[:etcd_token],
 	  	deployable_units: deployable_units,
-      notifications_config: payload[:notifications_config],
+      notifications_config: payload[:notifications_config]
     }
   end
 
@@ -93,6 +97,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	end
 
   	payload = Map.put(payload, :force_build, request.force_build)
+    payload = Map.put(payload, :build_messaging_exchange_id, request.build_messaging_exchange_id)
+    payload = Map.put(payload, :deploy_messaging_exchange_id, request.deploy_messaging_exchange_id)
   	payload = Map.put(payload, :orchestration_queue_name, request.orchestration_queue_name)
   	payload = Map.put(payload, :workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
   	payload = Map.put(payload, :workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)

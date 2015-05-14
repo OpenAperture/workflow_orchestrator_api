@@ -88,8 +88,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
     hipchat_queue = QueueBuilder.build(ManagerApi.get_api, "notifications_hipchat", exchange_id)
     options = ConnectionOptionsResolver.get_for_broker(ManagerApi.get_api, broker_id)
 		case publish(options, hipchat_queue, payload) do
-			:ok -> Logger.debug("Successfully published HipChat notification")
-			{:error, reason} -> Logger.error("Failed to publish HipChat notification:  #{inspect reason}")
+			:ok -> Logger.debug("[WorkflowOrchestratorApi][NotificationsPublisher] Successfully published HipChat notification")
+			{:error, reason} -> Logger.error("[WorkflowOrchestratorApi][NotificationsPublisher] Failed to publish HipChat notification:  #{inspect reason}")
 		end
     {:noreply, state}
   end

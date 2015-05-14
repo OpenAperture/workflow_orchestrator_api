@@ -69,8 +69,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
     options = ConnectionOptionsResolver.get_for_broker(ManagerApi.get_api, request.workflow_orchestration_broker_id)
     payload = Request.to_payload(request)
 		case publish(options, workflow_orchestration_queue, payload) do
-			:ok -> Logger.debug("Successfully published to the WorkflowOrchestrator")
-			{:error, reason} -> Logger.error("Failed to publish to the WorkflowOrchestrator:  #{inspect reason}")
+			:ok -> Logger.debug("[WorkflowOrchestratorApi][Publisher] Successfully published to the WorkflowOrchestrator")
+			{:error, reason} -> Logger.error("[WorkflowOrchestratorApi][Publisher] Failed to publish to the WorkflowOrchestrator:  #{inspect reason}")
 		end
     {:noreply, state}
   end
