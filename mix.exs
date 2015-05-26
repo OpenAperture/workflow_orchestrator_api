@@ -34,9 +34,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:ex_doc, github: "elixir-lang/ex_doc", only: [:test]},
-      {:markdown, github: "devinus/markdown", only: [:test]},
-      
+      {:ex_doc, "0.7.3", only: :test},
+      {:earmark, "0.1.17", only: :test},
       {:poison, "~> 1.3.1"},
       {:openaperture_messaging, git: "https://github.com/OpenAperture/messaging.git", ref: "e3247e4fbcc097a3156e3b95ad2115408693ca12", override: true},
       {:openaperture_manager_api, git: "https://github.com/OpenAperture/manager_api.git", ref: "32986942e702dc4b32ab9118362cda992949fa6c", override: true},
