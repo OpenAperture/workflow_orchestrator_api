@@ -9,7 +9,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   defstruct workflow: nil,
   	force_build: nil,
     build_messaging_exchange_id: nil,
-    deploy_messaging_exchange_id: nil,    
+    deploy_messaging_exchange_id: nil,
   	orchestration_queue_name: nil,
   	workflow_orchestration_exchange_id: nil,
   	workflow_orchestration_broker_id: nil,
@@ -18,7 +18,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	docker_build_etcd_token: nil,
   	etcd_token: nil,
   	deployable_units: nil,
-    notifications_config: nil
+    notifications_config: nil,
+    fleet_config: nil
 
   @type t :: %__MODULE__{}
 
@@ -61,7 +62,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 	  	docker_build_etcd_token: payload[:docker_build_etcd_token],
 	  	etcd_token: payload[:etcd_token],
 	  	deployable_units: deployable_units,
-      notifications_config: payload[:notifications_config]
+      notifications_config: payload[:notifications_config],
+      fleet_config: payload[:fleet_config]
     }
   end
 
@@ -108,6 +110,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	payload = Map.put(payload, :etcd_token, request.etcd_token)
   	payload = Map.put(payload, :deployable_units, deployable_units)
     payload = Map.put(payload, :notifications_config, request.notifications_config)
+    payload = Map.put(payload, :fleet_config, request.fleet_config)
   	payload
   end
 end
