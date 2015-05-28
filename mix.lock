@@ -1,6 +1,7 @@
 %{"amqp": {:hex, :amqp, "0.1.1"},
   "amqp_client": {:hex, :amqp_client, "3.5.0"},
-  "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "214afbbaee86c4f93b80419e736cdad1986712ef", []},
+  "earmark": {:hex, :earmark, "0.1.17"},
+  "ex_doc": {:hex, :ex_doc, "0.7.3"},
   "exactor": {:hex, :exactor, "2.1.2"},
   "exjsx": {:hex, :exjsx, "3.1.0"},
   "exvcr": {:git, "git://github.com/parroty/exvcr.git", "e23652efbaa21e863f679baf040470018a1c9d20", []},
