@@ -65,7 +65,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   end
 
   @doc """
-  Call handler to publish Hipchat Notifications
+  Method to publish a email notification
 
   ## Options
 
@@ -73,24 +73,56 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   The `broker_id` option defines the broker to which the Notification messages should be sent
 
-  The `payload` option defines the Hipchat Notification payload that should be sent
+  The `subject` option defines the email subject
 
-  The `_from` option defines the tuple {from, ref}
+  The `message` option defines the body of the email
+
+  The `recipients` option defines an array of email addresses of recipients
+
+  ## Return Values
+
+  :ok | {:error, reason}   
+  """
+  @spec email_notification(String.t, String.t, String.t, String.t(), List) :: :ok | {:error, String.t()}
+  def email_notification(exchange_id, broker_id, subject, message, recipients) do
+    payload = %{
+      prefix: subject,
+      message: message, 
+      notifications: %{email_addresses: recipients}
+    }
+
+    GenServer.cast(__MODULE__, {:email, exchange_id, broker_id, payload})
+  end
+
+  @doc """
+  Cast handler to publish Notifications
+
+  ## Options
+
+  The `notification_type` option defines an atom representing what type of notification should be sent (i.e. :hipchat, :email)
+
+  The `exchange_id` option defines the exchange in which Notification messages should be sent
+
+  The `broker_id` option defines the broker to which the Notification messages should be sent
+
+  The `payload` option defines the Hipchat Notification payload that should be sent
 
   The `state` option represents the server's current state
   
   ## Return Values
 
-  {:reply, {messaging_exchange_id, machine}, resolved_state}
+  {:noreply, state}
   """
-  @spec handle_cast({:hipchat, String.t(), String.t(), Map}, Map) :: {:noreply, Map}
-  def handle_cast({:hipchat, exchange_id, broker_id, payload}, state) do
-    hipchat_queue = QueueBuilder.build(ManagerApi.get_api, "notifications_hipchat", exchange_id)
+  @spec handle_cast({term, String.t(), String.t(), Map}, Map) :: {:noreply, Map}
+  def handle_cast({notification_type, exchange_id, broker_id, payload}, state) do
+    notification_type_string = to_string(notification_type)
+    queue = QueueBuilder.build(ManagerApi.get_api, "notifications_#{notification_type_string}", exchange_id)
     options = ConnectionOptionsResolver.get_for_broker(ManagerApi.get_api, broker_id)
-		case publish(options, hipchat_queue, payload) do
-			:ok -> Logger.debug("[WorkflowOrchestratorApi][NotificationsPublisher] Successfully published HipChat notification")
-			{:error, reason} -> Logger.error("[WorkflowOrchestratorApi][NotificationsPublisher] Failed to publish HipChat notification:  #{inspect reason}")
-		end
+    case publish(options, queue, payload) do
+      :ok -> Logger.debug("[WorkflowOrchestratorApi][NotificationsPublisher] Successfully published #{notification_type_string} notification")
+      {:error, reason} -> Logger.error("[WorkflowOrchestratorApi][NotificationsPublisher] Failed to publish #{notification_type_string} notification:  #{inspect reason}")
+    end    
+
     {:noreply, state}
   end
 end
