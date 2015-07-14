@@ -36,14 +36,14 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Mixfile do
     [
       {:ex_doc, "0.7.3", only: :test},
       {:earmark, "0.1.17", only: :test},
-      {:poison, "~> 1.3.1"},
-      {:openaperture_messaging, git: "https://github.com/OpenAperture/messaging.git", ref: "e3247e4fbcc097a3156e3b95ad2115408693ca12", override: true},
-      {:openaperture_manager_api, git: "https://github.com/OpenAperture/manager_api.git", ref: "32986942e702dc4b32ab9118362cda992949fa6c", override: true},
-      {:openaperture_fleet, git: "https://github.com/OpenAperture/fleet.git", ref: "7aeca4655225fa0dd63f1465c0af30b0992b94b5", override: true},
+      {:poison, "~> 1.4.0", override: true},
+      {:openaperture_messaging, git: "https://github.com/OpenAperture/messaging.git", ref: "525e68bdcec83a30d914813a58302cea02648b06", override: true},
+      {:openaperture_manager_api, git: "https://github.com/OpenAperture/manager_api.git", ref: "84eedf15d805e6a827b3d62978b5a20244c99094", override: true},
+      {:openaperture_fleet, git: "https://github.com/OpenAperture/fleet.git", ref: "714c52b5258f96e741b57c73577431caa6f480b3", override: true},
 
-      {:fleet_api, "~> 0.0.4"},
+      {:fleet_api, "~> 0.0.11"},
       {:timex, "~> 0.12.9"},
-      {:timex_extensions, git: "https://github.com/OpenAperture/timex_extensions.git", ref: "904f65f7f9f5d4e52619859e886c2e9a73b96bc0", override: true},
+      {:timex_extensions, git: "https://github.com/OpenAperture/timex_extensions.git", ref: "1665c1df90397702daf492c6f940e644085016cd", override: true},
 
       #test dependencies
       {:exvcr, github: "parroty/exvcr", override: true},

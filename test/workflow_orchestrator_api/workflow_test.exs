@@ -6,6 +6,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
   alias OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher, as: NotificationsPublisher
   alias OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher, as: WorkflowOrchestratorPublisher
 
+  alias OpenAperture.ManagerApi.Workflow, as: WorkflowAPI
+  alias OpenAperture.ManagerApi.Response
+
   test "from_payload" do
   	payload = %{
 			id: "id",
@@ -200,4 +203,76 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
   	:meck.unload(NotificationsPublisher)
   	:meck.unload(WorkflowOrchestratorPublisher)
   end    
+
+  # ============================
+  # save tests
+
+  test "save - success" do
+    :meck.new(WorkflowAPI, [:passthrough])
+    :meck.expect(WorkflowAPI, :update_workflow, fn _, _, _ -> %Response{status: 204} end)   
+
+    id = "#{UUID.uuid1()}"
+    payload = %{
+      id: id,
+      workflow_id: "workflow_id",
+      deployment_repo: "deployment_repo",
+      deployment_repo_git_ref: "deployment_repo_git_ref",
+      source_repo: "source_repo",
+      source_repo_git_ref: "source_repo_git_ref",
+      source_commit_hash: "source_commit_hash",
+      milestones: "milestones",
+      current_step: "current_step",
+      elapsed_step_time: "elapsed_step_time",
+      elapsed_workflow_time: "elapsed_workflow_time",
+      workflow_duration: "workflow_duration",
+      workflow_step_durations: "workflow_step_durations",
+      workflow_error: "workflow_error",
+      workflow_completed: "workflow_completed",
+      event_log: "event_log"
+    }
+
+    workflow = Workflow.from_payload(payload)
+    request = %Request{
+      workflow: workflow
+    }
+    returned_request = Workflow.save(request)
+    assert returned_request != nil
+  after
+    :meck.unload(WorkflowAPI)
+  end
+
+  test "save - failure" do
+    :meck.new(WorkflowAPI, [:passthrough])
+    :meck.expect(WorkflowAPI, :update_workflow, fn _, _, _ -> %Response{status: 400} end)   
+
+    id = "#{UUID.uuid1()}"
+    payload = %{
+      id: id,
+      workflow_id: "workflow_id",
+      deployment_repo: "deployment_repo",
+      deployment_repo_git_ref: "deployment_repo_git_ref",
+      source_repo: "source_repo",
+      source_repo_git_ref: "source_repo_git_ref",
+      source_commit_hash: "source_commit_hash",
+      milestones: "milestones",
+      current_step: "current_step",
+      elapsed_step_time: "elapsed_step_time",
+      elapsed_workflow_time: "elapsed_workflow_time",
+      workflow_duration: "workflow_duration",
+      workflow_step_durations: "workflow_step_durations",
+      workflow_error: "workflow_error",
+      workflow_completed: "workflow_completed",
+      event_log: "event_log"
+    }
+
+    workflow = Workflow.from_payload(payload)
+    request = %Request{
+      workflow: workflow
+    }
+    returned_request = Workflow.save(request)
+    assert returned_request != nil
+  after
+    :meck.unload(WorkflowAPI)
+  end  
+
 end

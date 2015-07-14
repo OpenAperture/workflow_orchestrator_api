@@ -10,6 +10,12 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   alias OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher, as: WorkflowOrchestratorPublisher
   alias OpenAperture.WorkflowOrchestratorApi.Request
 
+  alias OpenAperture.ManagerApi
+  alias OpenAperture.ManagerApi.Workflow, as: WorkflowAPI
+  alias OpenAperture.ManagerApi.Response  
+
+  alias OpenAperture.Timex.Extensions, as: TimexExtensions
+
   defstruct id: nil,
 				  	workflow_id: nil,
 				  	deployment_repo: nil,
@@ -219,5 +225,61 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   def step_completed(request) do
     WorkflowOrchestratorPublisher.execute_orchestration(request)
     request   
-  end  
+  end
+
+  @doc """
+  
+  Method to save Workflow info to the database
+
+  ## Options
+
+  The `request` option defines the Request
+
+  ## Return Value
+
+  Request
+  """
+  @spec save(Request.t) :: Request.t
+  def save(request) do
+    workflow_info = to_payload(request.workflow)
+
+    try do    
+      workflow_error = workflow_info[:workflow_error]
+      if workflow_error == nil && workflow_info[:workflow_completed] != nil  do
+        workflow_error = false
+      end
+
+      workflow_payload = %{
+        id: workflow_info[:id],
+        deployment_repo: workflow_info[:deployment_repo],
+        deployment_repo_git_ref: workflow_info[:deployment_repo_git_ref],
+        source_repo: workflow_info[:source_repo],
+        source_repo_git_ref: workflow_info[:source_repo_git_ref],
+        source_commit_hash: workflow_info[:source_commit_hash],
+        milestones: workflow_info[:milestones],
+        current_step: "#{workflow_info[:current_step]}",
+        elapsed_step_time: TimexExtensions.get_elapased_timestamp(workflow_info[:step_time]),
+        elapsed_workflow_time: TimexExtensions.get_elapased_timestamp(workflow_info[:workflow_start_time]),
+        workflow_duration: workflow_info[:workflow_duration],
+        workflow_step_durations: workflow_info[:workflow_step_durations],
+        workflow_error: workflow_error,
+        workflow_completed: workflow_info[:workflow_completed],
+        event_log: workflow_info[:event_log],
+      }
+    
+      case WorkflowAPI.update_workflow(ManagerApi.get_api, workflow_info[:id], workflow_payload) do
+        %Response{status: 204} -> :ok
+        %Response{status: status} -> Logger.error("Failed to save workflow; server returned #{status}")
+      end
+    catch
+      :exit, code   -> 
+        Logger.error("Failed to save workflow; Exited with code #{inspect code}")
+      :throw, value -> 
+        Logger.error("Failed to save workflow; Throw called with #{inspect value}")
+      what, value   -> 
+        Logger.error("Failed to save workflow; Caught #{inspect what} with #{inspect value}")
+    end
+
+    request  
+  end 
 end
