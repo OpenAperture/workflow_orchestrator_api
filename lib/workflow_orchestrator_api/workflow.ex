@@ -12,7 +12,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   alias OpenAperture.ManagerApi
   alias OpenAperture.ManagerApi.Workflow, as: WorkflowAPI
-  alias OpenAperture.ManagerApi.Response  
+  alias OpenAperture.ManagerApi.Response
 
   alias OpenAperture.Timex.Extensions, as: TimexExtensions
 
@@ -243,7 +243,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   def save(request) do
     workflow_info = to_payload(request.workflow)
 
-    try do    
+    #try do    
       workflow_error = workflow_info[:workflow_error]
       if workflow_error == nil && workflow_info[:workflow_completed] != nil  do
         workflow_error = false
@@ -258,8 +258,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
         source_commit_hash: workflow_info[:source_commit_hash],
         milestones: workflow_info[:milestones],
         current_step: "#{workflow_info[:current_step]}",
-        elapsed_step_time: TimexExtensions.get_elapased_timestamp(workflow_info[:step_time]),
-        elapsed_workflow_time: TimexExtensions.get_elapased_timestamp(workflow_info[:workflow_start_time]),
+        elapsed_step_time: TimexExtensions.get_elapsed_timestamp(workflow_info[:step_time]),
+        elapsed_workflow_time: TimexExtensions.get_elapsed_timestamp(workflow_info[:workflow_start_time]),
         workflow_duration: workflow_info[:workflow_duration],
         workflow_step_durations: workflow_info[:workflow_step_durations],
         workflow_error: workflow_error,
@@ -271,14 +271,14 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
         %Response{status: 204} -> :ok
         %Response{status: status} -> Logger.error("Failed to save workflow; server returned #{status}")
       end
-    catch
-      :exit, code   -> 
-        Logger.error("Failed to save workflow; Exited with code #{inspect code}")
-      :throw, value -> 
-        Logger.error("Failed to save workflow; Throw called with #{inspect value}")
-      what, value   -> 
-        Logger.error("Failed to save workflow; Caught #{inspect what} with #{inspect value}")
-    end
+    #catch
+    #  :exit, code   -> 
+    #    Logger.error("Failed to save workflow; Exited with code #{inspect code}")
+    #  :throw, value -> 
+    #    Logger.error("Failed to save workflow; Throw called with #{inspect value}")
+    #  what, value   -> 
+    #    Logger.error("Failed to save workflow; Caught #{inspect what} with #{inspect value}")
+    #end
 
     request  
   end 

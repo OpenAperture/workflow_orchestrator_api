@@ -9,6 +9,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
   alias OpenAperture.ManagerApi.Workflow, as: WorkflowAPI
   alias OpenAperture.ManagerApi.Response
 
+  alias OpenAperture.Timex.Extensions, as: TimexExtensions
+
   test "from_payload" do
   	payload = %{
 			id: "id",
@@ -211,6 +213,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
     :meck.new(WorkflowAPI, [:passthrough])
     :meck.expect(WorkflowAPI, :update_workflow, fn _, _, _ -> %Response{status: 204} end)   
 
+    :meck.new(TimexExtensions, [:passthrough])
+    :meck.expect(TimexExtensions, :get_elapsed_timestamp, fn _ -> "" end)
+
     id = "#{UUID.uuid1()}"
     payload = %{
       id: id,
@@ -239,12 +244,16 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
     assert returned_request != nil
   after
     :meck.unload(WorkflowAPI)
+    :meck.unload(TimexExtensions)
   end
 
   test "save - failure" do
     :meck.new(WorkflowAPI, [:passthrough])
     :meck.expect(WorkflowAPI, :update_workflow, fn _, _, _ -> %Response{status: 400} end)   
 
+    :meck.new(TimexExtensions, [:passthrough])
+    :meck.expect(TimexExtensions, :get_elapsed_timestamp, fn _ -> "" end)
+
     id = "#{UUID.uuid1()}"
     payload = %{
       id: id,
@@ -273,6 +282,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowTest do
     assert returned_request != nil
   after
     :meck.unload(WorkflowAPI)
+    :meck.unload(TimexExtensions)
   end  
 
 end
