@@ -33,7 +33,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 				    workflow_completed: nil,
             workflow_start_time: nil,
             step_time: nil,
-				    event_log: nil
+				    event_log: nil,
+            scheduled_start_time: nil,
+            execute_options: nil
 
   @type t :: %__MODULE__{}
 
@@ -68,7 +70,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
       workflow_completed: payload[:workflow_completed],
       event_log: payload[:event_log],
       workflow_start_time: payload[:workflow_start_time],
-      step_time: payload[:step_time]
+      step_time: payload[:step_time],
+      scheduled_start_time: payload[:scheduled_start_time],
+      execute_options: payload[:execute_options]
     }
   end
 
@@ -265,6 +269,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
         workflow_error: workflow_error,
         workflow_completed: workflow_info[:workflow_completed],
         event_log: workflow_info[:event_log],
+        scheduled_start_time: workflow_info[:scheduled_start_time],
+        execute_options: workflow_info[:execute_options]
       }
     
       case WorkflowAPI.update_workflow(ManagerApi.get_api, workflow_info[:id], workflow_payload) do
