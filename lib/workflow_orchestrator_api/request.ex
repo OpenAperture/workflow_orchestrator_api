@@ -34,7 +34,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 
   OpenAperture.WorkflowOrchestratorApi.Request.t
   """
-  @spec from_payload(Map) :: OpenAperture.WorkflowOrchestratorApi.Request.t
+  @spec from_payload(map) :: OpenAperture.WorkflowOrchestratorApi.Request.t
   def from_payload(payload) do
     deployable_units = case payload[:deployable_units] do
       nil -> nil
@@ -78,7 +78,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 
   Map
   """
-  @spec to_payload(OpenAperture.WorkflowOrchestratorApi.Request.t) :: Map
+  @spec to_payload(OpenAperture.WorkflowOrchestratorApi.Request.t) :: map
   def to_payload(request) do
     deployable_units = case request.deployable_units do
       nil -> nil

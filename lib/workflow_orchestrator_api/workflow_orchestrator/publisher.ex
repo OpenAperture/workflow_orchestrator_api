@@ -63,7 +63,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   {:reply, {messaging_exchange_id, machine}, resolved_state}
   """
-  @spec handle_cast({:execute_orchestration, Request.t}, Map) :: {:noreply, Map}
+  @spec handle_cast({:execute_orchestration, Request.t}, map) :: {:noreply, map}
   def handle_cast({:execute_orchestration, request}, state) do
     workflow_orchestration_queue = QueueBuilder.build(ManagerApi.get_api, request.orchestration_queue_name, request.workflow_orchestration_exchange_id)
     options = ConnectionOptionsResolver.get_for_broker(ManagerApi.get_api, request.workflow_orchestration_broker_id)

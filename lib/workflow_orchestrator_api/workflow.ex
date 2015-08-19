@@ -50,7 +50,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   OpenAperture.WorkflowOrchestratorApi.Workflow
   """
-  @spec from_payload(Map) :: OpenAperture.WorkflowOrchestratorApi.Workflow
+  @spec from_payload(map) :: OpenAperture.WorkflowOrchestratorApi.Workflow
   def from_payload(payload) do
   	%OpenAperture.WorkflowOrchestratorApi.Workflow{
   		id: payload[:id],
@@ -87,7 +87,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Map
   """
-  @spec to_payload(OpenAperture.WorkflowOrchestratorApi.Workflow.t) :: Map
+  @spec to_payload(OpenAperture.WorkflowOrchestratorApi.Workflow.t) :: map
   def to_payload(workflow) do
     Map.from_struct(workflow)
   end
