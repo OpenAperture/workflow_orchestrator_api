@@ -56,8 +56,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   def hipchat_notification(exchange_id, broker_id, is_success, prefix, message, room_names \\ nil) do
 		payload = %{
 			is_success: is_success,
-			prefix: prefix,
-			message: message,
+			prefix:     prefix,
+			message:    message,
 			room_names: room_names
 		}
 
@@ -86,8 +86,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   @spec email_notification(String.t, String.t, String.t, String.t, List) :: :ok | {:error, String.t}
   def email_notification(exchange_id, broker_id, subject, message, recipients) do
     payload = %{
-      prefix: subject,
-      message: message,
+      prefix:        subject,
+      message:       message,
       notifications: %{email_addresses: recipients}
     }
 
@@ -116,7 +116,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   @spec handle_cast({term, String.t, String.t, map}, map) :: {:noreply, map}
   def handle_cast({notification_type, exchange_id, broker_id, payload}, state) do
     notification_type_string = to_string(notification_type)
-    queue = QueueBuilder.build(ManagerApi.get_api, "notifications_#{notification_type_string}", exchange_id)
+    queue   = QueueBuilder.build(ManagerApi.get_api, "notifications_#{notification_type_string}", exchange_id)
     options = ConnectionOptionsResolver.get_for_broker(ManagerApi.get_api, broker_id)
     case publish(options, queue, payload) do
       :ok -> Logger.debug("[WorkflowOrchestratorApi][NotificationsPublisher] Successfully published #{notification_type_string} notification")
