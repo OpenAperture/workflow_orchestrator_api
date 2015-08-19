@@ -6,20 +6,20 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 
 	alias OpenAperture.WorkflowOrchestratorApi.Workflow
 
-  defstruct workflow: nil,
-  	force_build: nil,
-    build_messaging_exchange_id: nil,
-    deploy_messaging_exchange_id: nil,
-  	orchestration_queue_name: nil,
-  	workflow_orchestration_exchange_id: nil,
-  	workflow_orchestration_broker_id: nil,
-  	notifications_exchange_id: nil,
-  	notifications_broker_id: nil,
-  	docker_build_etcd_token: nil,
-  	etcd_token: nil,
-  	deployable_units: nil,
-    notifications_config: nil,
-    fleet_config: nil
+  defstruct workflow:                            nil,
+            force_build:                         nil,
+            build_messaging_exchange_id:         nil,
+            deploy_messaging_exchange_id:        nil,
+            orchestration_queue_name:            nil,
+            workflow_orchestration_exchange_id:  nil,
+            workflow_orchestration_broker_id:    nil,
+            notifications_exchange_id:           nil,
+            notifications_broker_id:             nil,
+            docker_build_etcd_token:             nil,
+            etcd_token:                          nil,
+            deployable_units:                    nil,
+            notifications_config:                nil,
+            fleet_config:                        nil
 
   @type t :: %__MODULE__{}
 
