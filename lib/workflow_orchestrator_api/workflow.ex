@@ -6,7 +6,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Methods and Workflow struct that will be received from (and should be sent to) the WorkflowOrchestrator
   """
 
-	alias OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher, as: NotificationsPublisher
+  alias OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher, as: NotificationsPublisher
   alias OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher, as: WorkflowOrchestratorPublisher
   alias OpenAperture.WorkflowOrchestratorApi.Request
 
@@ -52,7 +52,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   """
   @spec from_payload(map) :: OpenAperture.WorkflowOrchestratorApi.Workflow
   def from_payload(payload) do
-  	%OpenAperture.WorkflowOrchestratorApi.Workflow{
+    %OpenAperture.WorkflowOrchestratorApi.Workflow{
       id:                      payload[:id],
       workflow_id:             payload[:workflow_id],
       deployment_repo:         payload[:deployment_repo],
@@ -106,9 +106,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Request
   """
   @spec publish_success_notification(Request.t, String.t) :: Request.t
-	def publish_success_notification(request, message) do
-		send_notification(request, true, message)
-	end
+  def publish_success_notification(request, message) do
+    send_notification(request, true, message)
+  end
 
   @doc """
   Method to publish a "failure" notification
@@ -124,9 +124,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Request
   """
   @spec publish_failure_notification(Request.t, String.t) :: Request.t
-	def publish_failure_notification(request, message) do
-		send_notification(request, false, message)
-	end
+  def publish_failure_notification(request, message) do
+    send_notification(request, false, message)
+  end
 
   @doc """
   Method to publish a notification
@@ -144,8 +144,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Request
   """
   @spec send_notification(Request.t, term, String.t) :: Request.t
-	def send_notification(request, is_success, message) do
-		prefix = "[OA][#{request.workflow.id}]"
+  def send_notification(request, is_success, message) do
+    prefix = "[OA][#{request.workflow.id}]"
     Logger.debug("#{prefix} #{message}")
 
     hipchat_room_names =  case request.notifications_config do
@@ -154,7 +154,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
                           end
     NotificationsPublisher.hipchat_notification(request.notifications_exchange_id, request.notifications_broker_id, is_success, prefix, message, hipchat_room_names)
     add_event_to_log(request, message, prefix)
-	end
+  end
 
   @doc """
   Method to add an event to the workflow's event log

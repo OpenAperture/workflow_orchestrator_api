@@ -1,7 +1,7 @@
 require Logger
 
 defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
-	use GenServer
+  use GenServer
 
   @moduledoc """
   This module contains the logic to publish messages to the Notifications system module
@@ -9,13 +9,13 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   alias OpenAperture.ManagerApi
 
-	alias OpenAperture.Messaging.AMQP.QueueBuilder
+  alias OpenAperture.Messaging.AMQP.QueueBuilder
   alias OpenAperture.Messaging.ConnectionOptionsResolver
 
   alias OpenAperture.ManagerApi
 
-	@connection_options nil
-	use OpenAperture.Messaging
+  @connection_options nil
+  use OpenAperture.Messaging
 
   @doc """
   Specific start_link implementation (required by the supervisor)
@@ -54,14 +54,14 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   """
   @spec hipchat_notification(String.t, String.t, term, String.t, String.t, List) :: :ok | {:error, String.t}
   def hipchat_notification(exchange_id, broker_id, is_success, prefix, message, room_names \\ nil) do
-		payload = %{
-			is_success: is_success,
-			prefix:     prefix,
-			message:    message,
-			room_names: room_names
-		}
+    payload = %{
+      is_success: is_success,
+      prefix:     prefix,
+      message:    message,
+      room_names: room_names
+    }
 
-  	GenServer.cast(__MODULE__, {:hipchat, exchange_id, broker_id, payload})
+    GenServer.cast(__MODULE__, {:hipchat, exchange_id, broker_id, payload})
   end
 
   @doc """

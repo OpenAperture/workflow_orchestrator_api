@@ -1,7 +1,7 @@
 require Logger
 
 defmodule OpenAperture.WorkflowOrchestratorApi do
-	use Application
+  use Application
 
   @moduledoc """
   This module contains definition the OpenAperture WorkflowOrchestratorApi implementation

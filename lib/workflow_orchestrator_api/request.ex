@@ -1,10 +1,10 @@
 defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 
-	@moduledoc """
-	Methods and Request struct that will be received from (and should be sent to) the WorkflowOrchestrator
-	"""
+  @moduledoc """
+  Methods and Request struct that will be received from (and should be sent to) the WorkflowOrchestrator
+  """
 
-	alias OpenAperture.WorkflowOrchestratorApi.Workflow
+  alias OpenAperture.WorkflowOrchestratorApi.Workflow
 
   defstruct workflow:                            nil,
             force_build:                         nil,
@@ -49,21 +49,21 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
         end
     end
 
-  	%OpenAperture.WorkflowOrchestratorApi.Request{
-  		workflow: Workflow.from_payload(payload),
-  		force_build: payload[:force_build],
-      build_messaging_exchange_id: payload[:build_messaging_exchange_id],
-      deploy_messaging_exchange_id: payload[:deploy_messaging_exchange_id],
-	  	orchestration_queue_name: payload[:orchestration_queue_name],
-	  	notifications_exchange_id: payload[:notifications_exchange_id],
-	  	notifications_broker_id: payload[:notifications_broker_id],
-	  	workflow_orchestration_exchange_id: payload[:workflow_orchestration_exchange_id],
-	  	workflow_orchestration_broker_id: payload[:workflow_orchestration_broker_id],
-	  	docker_build_etcd_token: payload[:docker_build_etcd_token],
-	  	etcd_token: payload[:etcd_token],
-	  	deployable_units: deployable_units,
-      notifications_config: payload[:notifications_config],
-      fleet_config: payload[:fleet_config]
+    %OpenAperture.WorkflowOrchestratorApi.Request{
+      workflow:                           Workflow.from_payload(payload),
+      force_build:                        payload[:force_build],
+      build_messaging_exchange_id:        payload[:build_messaging_exchange_id],
+      deploy_messaging_exchange_id:       payload[:deploy_messaging_exchange_id],
+      orchestration_queue_name:           payload[:orchestration_queue_name],
+      notifications_exchange_id:          payload[:notifications_exchange_id],
+      notifications_broker_id:            payload[:notifications_broker_id],
+      workflow_orchestration_exchange_id: payload[:workflow_orchestration_exchange_id],
+      workflow_orchestration_broker_id:   payload[:workflow_orchestration_broker_id],
+      docker_build_etcd_token:            payload[:docker_build_etcd_token],
+      etcd_token:                         payload[:etcd_token],
+      deployable_units:                   deployable_units,
+      notifications_config:               payload[:notifications_config],
+      fleet_config:                       payload[:fleet_config]
     }
   end
 
@@ -92,25 +92,25 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
         end
     end
 
-  	payload = if request.workflow != nil do
-  		Workflow.to_payload(request.workflow)
-  	else
-  		%{}
-  	end
+    payload = if request.workflow != nil do
+      Workflow.to_payload(request.workflow)
+    else
+      %{}
+    end
 
-  	payload = Map.put(payload, :force_build, request.force_build)
+    payload = Map.put(payload, :force_build, request.force_build)
     payload = Map.put(payload, :build_messaging_exchange_id, request.build_messaging_exchange_id)
     payload = Map.put(payload, :deploy_messaging_exchange_id, request.deploy_messaging_exchange_id)
-  	payload = Map.put(payload, :orchestration_queue_name, request.orchestration_queue_name)
-  	payload = Map.put(payload, :workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
-  	payload = Map.put(payload, :workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)
-  	payload = Map.put(payload, :notifications_exchange_id, request.notifications_exchange_id)
-  	payload = Map.put(payload, :notifications_broker_id, request.notifications_broker_id)
-  	payload = Map.put(payload, :docker_build_etcd_token, request.docker_build_etcd_token)
-  	payload = Map.put(payload, :etcd_token, request.etcd_token)
-  	payload = Map.put(payload, :deployable_units, deployable_units)
+    payload = Map.put(payload, :orchestration_queue_name, request.orchestration_queue_name)
+    payload = Map.put(payload, :workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
+    payload = Map.put(payload, :workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)
+    payload = Map.put(payload, :notifications_exchange_id, request.notifications_exchange_id)
+    payload = Map.put(payload, :notifications_broker_id, request.notifications_broker_id)
+    payload = Map.put(payload, :docker_build_etcd_token, request.docker_build_etcd_token)
+    payload = Map.put(payload, :etcd_token, request.etcd_token)
+    payload = Map.put(payload, :deployable_units, deployable_units)
     payload = Map.put(payload, :notifications_config, request.notifications_config)
     payload = Map.put(payload, :fleet_config, request.fleet_config)
-  	payload
+    payload
   end
 end
