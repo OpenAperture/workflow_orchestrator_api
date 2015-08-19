@@ -5,7 +5,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   @moduledoc """
   This module contains the logic to publish messages to the WorkflowOrchestrator system module
-  """  
+  """
 
   alias OpenAperture.ManagerApi
 
@@ -27,7 +27,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   {:ok, pid} | {:error, reason}
   """
-  @spec start_link() :: {:ok, pid} | {:error, String.t()}   
+  @spec start_link() :: {:ok, pid} | {:error, String.t()}
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -41,7 +41,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   ## Return Values
 
-  :ok | {:error, reason}   
+  :ok | {:error, reason}
   """
   @spec execute_orchestration(Request.t) :: :ok | {:error, String.t()}
   def execute_orchestration(request) do
@@ -58,7 +58,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
   The `_from` option defines the tuple {from, ref}
 
   The `state` option represents the server's current state
-  
+
   ## Return Values
 
   {:reply, {messaging_exchange_id, machine}, resolved_state}

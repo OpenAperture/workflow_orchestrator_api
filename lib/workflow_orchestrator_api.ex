@@ -5,7 +5,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi do
 
   @moduledoc """
   This module contains definition the OpenAperture WorkflowOrchestratorApi implementation
-  """  
+  """
 
   @doc """
   Starts the given `_type`.
@@ -52,5 +52,5 @@ defmodule OpenAperture.WorkflowOrchestratorApi do
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.start_link(children, opts)
-  end	
+  end
 end

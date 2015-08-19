@@ -5,7 +5,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   @moduledoc """
   This module contains the logic to publish messages to the Notifications system module
-  """  
+  """
 
   alias OpenAperture.ManagerApi
 
@@ -26,7 +26,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   {:ok, pid} | {:error, reason}
   """
-  @spec start_link() :: {:ok, pid} | {:error, String.t()}   
+  @spec start_link() :: {:ok, pid} | {:error, String.t()}
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -50,7 +50,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   ## Return Values
 
-  :ok | {:error, reason}   
+  :ok | {:error, reason}
   """
   @spec hipchat_notification(String.t, String.t, term, String.t(), String.t(), List) :: :ok | {:error, String.t()}
   def hipchat_notification(exchange_id, broker_id, is_success, prefix, message, room_names \\ nil) do
@@ -81,13 +81,13 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   ## Return Values
 
-  :ok | {:error, reason}   
+  :ok | {:error, reason}
   """
   @spec email_notification(String.t, String.t, String.t, String.t(), List) :: :ok | {:error, String.t()}
   def email_notification(exchange_id, broker_id, subject, message, recipients) do
     payload = %{
       prefix: subject,
-      message: message, 
+      message: message,
       notifications: %{email_addresses: recipients}
     }
 
@@ -108,7 +108,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   The `payload` option defines the Hipchat Notification payload that should be sent
 
   The `state` option represents the server's current state
-  
+
   ## Return Values
 
   {:noreply, state}
@@ -121,7 +121,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
     case publish(options, queue, payload) do
       :ok -> Logger.debug("[WorkflowOrchestratorApi][NotificationsPublisher] Successfully published #{notification_type_string} notification")
       {:error, reason} -> Logger.error("[WorkflowOrchestratorApi][NotificationsPublisher] Failed to publish #{notification_type_string} notification:  #{inspect reason}")
-    end    
+    end
 
     {:noreply, state}
   end

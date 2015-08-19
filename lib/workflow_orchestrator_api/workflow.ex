@@ -90,13 +90,13 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   @spec to_payload(OpenAperture.WorkflowOrchestratorApi.Workflow.t) :: Map
   def to_payload(workflow) do
     Map.from_struct(workflow)
-  end  
+  end
 
   @doc """
   Method to publish a "success" notification
 
   ## Options
-   
+
   The `request` option defines the Request
 
   The `message` option defines the message to publish
@@ -114,7 +114,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Method to publish a "failure" notification
 
   ## Options
-   
+
   The `request` option defines the Request
 
   The `message` option defines the message to publish
@@ -132,7 +132,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   Method to publish a notification
 
   ## Options
-   
+
   The `request` option defines the Request
 
   The `is_success` option defines failure/success of the message
@@ -228,11 +228,11 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   @spec step_completed(Request.t) :: Request.t
   def step_completed(request) do
     WorkflowOrchestratorPublisher.execute_orchestration(request)
-    request   
+    request
   end
 
   @doc """
-  
+
   Method to save Workflow info to the database
 
   ## Options
@@ -247,7 +247,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   def save(request) do
     workflow_info = to_payload(request.workflow)
 
-    #try do    
+    #try do
       workflow_error = workflow_info[:workflow_error]
       if workflow_error == nil && workflow_info[:workflow_completed] != nil  do
         workflow_error = false
@@ -272,20 +272,20 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
         scheduled_start_time: workflow_info[:scheduled_start_time],
         execute_options: workflow_info[:execute_options]
       }
-    
+
       case WorkflowAPI.update_workflow(ManagerApi.get_api, workflow_info[:id], workflow_payload) do
         %Response{status: 204} -> :ok
         %Response{status: status} -> Logger.error("Failed to save workflow; server returned #{status}")
       end
     #catch
-    #  :exit, code   -> 
+    #  :exit, code   ->
     #    Logger.error("Failed to save workflow; Exited with code #{inspect code}")
-    #  :throw, value -> 
+    #  :throw, value ->
     #    Logger.error("Failed to save workflow; Throw called with #{inspect value}")
-    #  what, value   -> 
+    #  what, value   ->
     #    Logger.error("Failed to save workflow; Caught #{inspect what} with #{inspect value}")
     #end
 
-    request  
-  end 
+    request
+  end
 end

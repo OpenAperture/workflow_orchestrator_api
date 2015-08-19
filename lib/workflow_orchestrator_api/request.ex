@@ -3,7 +3,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
 	@moduledoc """
 	Methods and Request struct that will be received from (and should be sent to) the WorkflowOrchestrator
 	"""
-	
+
 	alias OpenAperture.WorkflowOrchestratorApi.Workflow
 
   defstruct workflow: nil,
@@ -39,7 +39,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
     deployable_units = case payload[:deployable_units] do
       nil -> nil
       []  -> []
-      _   -> 
+      _   ->
         Enum.reduce payload[:deployable_units], [], fn deployable_unit, new_units ->
           if deployable_unit == nil do
             new_units
@@ -53,7 +53,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   		workflow: Workflow.from_payload(payload),
   		force_build: payload[:force_build],
       build_messaging_exchange_id: payload[:build_messaging_exchange_id],
-      deploy_messaging_exchange_id: payload[:deploy_messaging_exchange_id],      
+      deploy_messaging_exchange_id: payload[:deploy_messaging_exchange_id],
 	  	orchestration_queue_name: payload[:orchestration_queue_name],
 	  	notifications_exchange_id: payload[:notifications_exchange_id],
 	  	notifications_broker_id: payload[:notifications_broker_id],
@@ -83,7 +83,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
     deployable_units = case request.deployable_units do
       nil -> nil
       []  -> []
-      _   -> 
+      _   ->
         Enum.reduce request.deployable_units, [], fn deployable_unit, new_units ->
           # FleetApi.Unit.from_map requires keys to be strings
           atom_map = Map.from_struct(deployable_unit)
@@ -92,7 +92,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
         end
     end
 
-  	payload = if request.workflow != nil do 
+  	payload = if request.workflow != nil do
   		Workflow.to_payload(request.workflow)
   	else
   		%{}
@@ -105,7 +105,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
   	payload = Map.put(payload, :workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
   	payload = Map.put(payload, :workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)
   	payload = Map.put(payload, :notifications_exchange_id, request.notifications_exchange_id)
-  	payload = Map.put(payload, :notifications_broker_id, request.notifications_broker_id)  	
+  	payload = Map.put(payload, :notifications_broker_id, request.notifications_broker_id)
   	payload = Map.put(payload, :docker_build_etcd_token, request.docker_build_etcd_token)
   	payload = Map.put(payload, :etcd_token, request.etcd_token)
   	payload = Map.put(payload, :deployable_units, deployable_units)
