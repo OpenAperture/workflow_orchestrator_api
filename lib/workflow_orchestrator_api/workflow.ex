@@ -105,7 +105,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Request
   """
-  @spec publish_success_notification(Request.t, String.t()) :: Request.t
+  @spec publish_success_notification(Request.t, String.t) :: Request.t
 	def publish_success_notification(request, message) do
 		send_notification(request, true, message)
 	end
@@ -123,7 +123,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Request
   """
-  @spec publish_failure_notification(Request.t, String.t()) :: Request.t
+  @spec publish_failure_notification(Request.t, String.t) :: Request.t
 	def publish_failure_notification(request, message) do
 		send_notification(request, false, message)
 	end
@@ -143,7 +143,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Request
   """
-  @spec send_notification(Request.t, term, String.t()) :: Request.t
+  @spec send_notification(Request.t, term, String.t) :: Request.t
 	def send_notification(request, is_success, message) do
 		prefix = "[OA][#{request.workflow.id}]"
     Logger.debug("#{prefix} #{message}")
@@ -172,7 +172,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Request
   """
-  @spec add_event_to_log(Request.t, String.t(), String.t()) :: Request.t
+  @spec add_event_to_log(Request.t, String.t, String.t) :: Request.t
   def add_event_to_log(request, event, prefix \\ nil) do
     if (prefix == nil) do
       prefix = "[OA][#{request.workflow.id}]"
@@ -202,7 +202,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
 
   Request
   """
-  @spec step_failed(Request.t, String.t(), String.t()) :: Request.t
+  @spec step_failed(Request.t, String.t, String.t) :: Request.t
   def step_failed(request, message, reason) do
     workflow = %{request.workflow | workflow_error: true}
     workflow = %{workflow | workflow_completed: true}

@@ -27,7 +27,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   {:ok, pid} | {:error, reason}
   """
-  @spec start_link() :: {:ok, pid} | {:error, String.t()}
+  @spec start_link() :: {:ok, pid} | {:error, String.t}
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -43,7 +43,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.WorkflowOrchestrator.Publisher do
 
   :ok | {:error, reason}
   """
-  @spec execute_orchestration(Request.t) :: :ok | {:error, String.t()}
+  @spec execute_orchestration(Request.t) :: :ok | {:error, String.t}
   def execute_orchestration(request) do
   	GenServer.cast(__MODULE__, {:execute_orchestration, request})
   end

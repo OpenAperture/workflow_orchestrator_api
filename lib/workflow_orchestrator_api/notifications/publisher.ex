@@ -26,7 +26,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   {:ok, pid} | {:error, reason}
   """
-  @spec start_link() :: {:ok, pid} | {:error, String.t()}
+  @spec start_link() :: {:ok, pid} | {:error, String.t}
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -52,7 +52,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   :ok | {:error, reason}
   """
-  @spec hipchat_notification(String.t, String.t, term, String.t(), String.t(), List) :: :ok | {:error, String.t()}
+  @spec hipchat_notification(String.t, String.t, term, String.t, String.t, List) :: :ok | {:error, String.t}
   def hipchat_notification(exchange_id, broker_id, is_success, prefix, message, room_names \\ nil) do
 		payload = %{
 			is_success: is_success,
@@ -83,7 +83,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   :ok | {:error, reason}
   """
-  @spec email_notification(String.t, String.t, String.t, String.t(), List) :: :ok | {:error, String.t()}
+  @spec email_notification(String.t, String.t, String.t, String.t, List) :: :ok | {:error, String.t}
   def email_notification(exchange_id, broker_id, subject, message, recipients) do
     payload = %{
       prefix: subject,
@@ -113,7 +113,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
 
   {:noreply, state}
   """
-  @spec handle_cast({term, String.t(), String.t(), Map}, Map) :: {:noreply, Map}
+  @spec handle_cast({term, String.t, String.t, Map}, Map) :: {:noreply, Map}
   def handle_cast({notification_type, exchange_id, broker_id, payload}, state) do
     notification_type_string = to_string(notification_type)
     queue = QueueBuilder.build(ManagerApi.get_api, "notifications_#{notification_type_string}", exchange_id)
