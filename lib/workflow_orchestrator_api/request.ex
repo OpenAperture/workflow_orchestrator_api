@@ -91,10 +91,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
         end
     end
 
-    payload = case request.workflow do
-      nil -> %{}
-      _   -> Workflow.to_payload(request.workflow)
-    end
+    initial_payload_from(request)
       |> Map.put(:force_build, request.force_build)
       |> Map.put(:build_messaging_exchange_id, request.build_messaging_exchange_id)
       |> Map.put(:deploy_messaging_exchange_id, request.deploy_messaging_exchange_id)
@@ -108,5 +105,13 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
       |> Map.put(:deployable_units, deployable_units)
       |> Map.put(:notifications_config, request.notifications_config)
       |> Map.put(:fleet_config, request.fleet_config)
+  end
+
+  @spec initial_payload_from(OpenAperture.WorkflowOrchestratorApi.Request.t) :: map
+  defp initial_payload_from(request) do
+    case request.workflow do
+      nil -> %{}
+      _   -> Workflow.to_payload(request.workflow)
+    end
   end
 end
