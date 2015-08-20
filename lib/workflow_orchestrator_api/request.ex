@@ -41,10 +41,9 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
       []  -> []
       _   ->
         Enum.reduce payload[:deployable_units], [], fn deployable_unit, new_units ->
-          if deployable_unit == nil do
-            new_units
-          else
-            new_units ++ [FleetApi.Unit.from_map(deployable_unit)]
+          case deployable_unit do
+            nil -> new_units
+            _   -> new_units ++ [FleetApi.Unit.from_map(deployable_unit)]
           end
         end
     end
@@ -87,15 +86,14 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
         Enum.reduce request.deployable_units, [], fn deployable_unit, new_units ->
           # FleetApi.Unit.from_map requires keys to be strings
           atom_map = Map.from_struct(deployable_unit)
-          json = Poison.encode!(atom_map)
+          json     = Poison.encode!(atom_map)
           new_units ++ [Poison.decode!(json)]
         end
     end
 
-    payload = if request.workflow != nil do
-      Workflow.to_payload(request.workflow)
-    else
-      %{}
+    payload = case request.workflow do
+      nil -> %{}
+      _   -> Workflow.to_payload(request.workflow)
     end
 
     payload = Map.put(payload, :force_build, request.force_build)
