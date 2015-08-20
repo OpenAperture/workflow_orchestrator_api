@@ -152,7 +152,12 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
                             nil -> []
                             _   -> request.notifications_config["hipchat"]["room_names"]
                           end
-    NotificationsPublisher.hipchat_notification(request.notifications_exchange_id, request.notifications_broker_id, is_success, prefix, message, hipchat_room_names)
+    NotificationsPublisher.hipchat_notification(request.notifications_exchange_id,
+                                                request.notifications_broker_id,
+                                                is_success,
+                                                prefix,
+                                                message,
+                                                hipchat_room_names)
     add_event_to_log(request, message, prefix)
   end
 
@@ -173,14 +178,10 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Workflow do
   """
   @spec add_event_to_log(Request.t, String.t, String.t) :: Request.t
   def add_event_to_log(request, event, prefix \\ nil) do
-    if (prefix == nil) do
-      prefix = "[OA][#{request.workflow.id}]"
-    end
+    prefix = prefix || "[OA][#{request.workflow.id}]"
 
     event_log = request.workflow.event_log
-    if (event_log == nil) do
-      event_log = []
-    end
+    event_log = event_log || []
     event_log = event_log ++ ["#{prefix} #{event}"]
     workflow  = %{request.workflow | event_log: event_log}
     %{request | workflow: workflow}
