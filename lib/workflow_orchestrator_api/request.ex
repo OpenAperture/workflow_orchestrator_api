@@ -95,20 +95,18 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
       nil -> %{}
       _   -> Workflow.to_payload(request.workflow)
     end
-
-    payload = Map.put(payload, :force_build, request.force_build)
-    payload = Map.put(payload, :build_messaging_exchange_id, request.build_messaging_exchange_id)
-    payload = Map.put(payload, :deploy_messaging_exchange_id, request.deploy_messaging_exchange_id)
-    payload = Map.put(payload, :orchestration_queue_name, request.orchestration_queue_name)
-    payload = Map.put(payload, :workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
-    payload = Map.put(payload, :workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)
-    payload = Map.put(payload, :notifications_exchange_id, request.notifications_exchange_id)
-    payload = Map.put(payload, :notifications_broker_id, request.notifications_broker_id)
-    payload = Map.put(payload, :docker_build_etcd_token, request.docker_build_etcd_token)
-    payload = Map.put(payload, :etcd_token, request.etcd_token)
-    payload = Map.put(payload, :deployable_units, deployable_units)
-    payload = Map.put(payload, :notifications_config, request.notifications_config)
-    payload = Map.put(payload, :fleet_config, request.fleet_config)
-    payload
+      |> Map.put(:force_build, request.force_build)
+      |> Map.put(:build_messaging_exchange_id, request.build_messaging_exchange_id)
+      |> Map.put(:deploy_messaging_exchange_id, request.deploy_messaging_exchange_id)
+      |> Map.put(:orchestration_queue_name, request.orchestration_queue_name)
+      |> Map.put(:workflow_orchestration_exchange_id, request.workflow_orchestration_exchange_id)
+      |> Map.put(:workflow_orchestration_broker_id, request.workflow_orchestration_broker_id)
+      |> Map.put(:notifications_exchange_id, request.notifications_exchange_id)
+      |> Map.put(:notifications_broker_id, request.notifications_broker_id)
+      |> Map.put(:docker_build_etcd_token, request.docker_build_etcd_token)
+      |> Map.put(:etcd_token, request.etcd_token)
+      |> Map.put(:deployable_units, deployable_units)
+      |> Map.put(:notifications_config, request.notifications_config)
+      |> Map.put(:fleet_config, request.fleet_config)
   end
 end
