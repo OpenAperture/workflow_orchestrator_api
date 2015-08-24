@@ -8,6 +8,10 @@ This reusable Elixir messaging library provides an application for interacting w
 * Provides a Publisher to send events to the WorkflowOrchestrator module
 * Provides a Request and Workflow struct for interacting with payloads from the WorkflowOrchestrator module
 
+## Contributing
+
+To contribute to OpenAperture development, view our [contributing guide](http://openaperture.io/dev_resources/contributing.html)
+
 ## Usage
 
 Add the :openaperture_workflow_orchestrator_api application to your Elixir application or module.
