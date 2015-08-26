@@ -111,7 +111,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Notifications.Publisher do
   
   ## Return Values
 
-  {:noreply, state}
+      {:noreply, state}
   """
   @spec handle_cast({term, String.t(), String.t(), Map}, Map) :: {:noreply, Map}
   def handle_cast({notification_type, exchange_id, broker_id, payload}, state) do
