@@ -1,11 +1,11 @@
 require Logger
 
 defmodule OpenAperture.WorkflowOrchestratorApi do
-	use Application
+  use Application
 
   @moduledoc """
   This module contains definition the OpenAperture WorkflowOrchestratorApi implementation
-  """  
+  """
 
   @doc """
   Starts the given `_type`.
@@ -41,7 +41,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi do
   Note also that the `:transient` type is of little practical use, since when a
   supervision tree terminates, the reason is set to `:shutdown`, not `:normal`.
   """
-  @spec start(atom, [any]) :: :ok | {:error, String.t()}
+  @spec start(atom, [any]) :: :ok | {:error, String.t}
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
     Logger.info("Starting OpenAperture.WorkflowOrchestratorApi...")
@@ -52,5 +52,5 @@ defmodule OpenAperture.WorkflowOrchestratorApi do
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.start_link(children, opts)
-  end	
+  end
 end
