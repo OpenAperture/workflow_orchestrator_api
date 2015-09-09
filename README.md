@@ -1,6 +1,6 @@
 # OpenAperture.WorkflowOrchestratorApi
 
-[![Build Status](https://semaphoreci.com/api/v1/projects/ac149a06-88e2-460e-b4b2-bad6440ee926/404672/badge.svg)](https://semaphoreci.com/perceptive/workflow_orchestrator_api)
+[![Build Status](https://semaphoreci.com/api/v1/projects/c68a83ca-34e7-4e50-84ed-babe403f5dee/445773/badge.svg)](https://semaphoreci.com/perceptive/openaperture_workflow_orchestrator_api)
 
 This reusable Elixir messaging library provides an application for interacting with the WorkflowOrchestrator system module.  It provides the following features:
 
