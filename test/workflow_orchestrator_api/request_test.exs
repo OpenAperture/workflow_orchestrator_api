@@ -18,6 +18,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
 	  	etcd_token: "etcd_token",
 	  	deployable_units: [%{"name" => "test", "options" => []}],
       notifications_config: "notifications_config",
+      aws_config: %{"name" => "test"},
   	}
 
     request = Request.from_payload(payload)
@@ -35,6 +36,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request.etcd_token == payload[:etcd_token]
     assert request.deployable_units == [%FleetApi.Unit{currentState: nil, desiredState: nil, machineID: nil, name: "test", options: []}]
     assert request.notifications_config == payload[:notifications_config] 
+    assert request.aws_config == payload[:aws_config] 
   end
 
   test "to_payload" do
@@ -51,6 +53,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
 	  	etcd_token: "etcd_token",
 	  	deployable_units: [%FleetApi.Unit{name: "test"}],
       notifications_config: "notifications_config",
+      aws_config: %{"name" => "test"},
   	}
 
     payload = Request.to_payload(request)
@@ -67,5 +70,6 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request.etcd_token == payload[:etcd_token]
     assert payload[:deployable_units] == [%{"currentState" => nil, "desiredState" => nil, "machineID" => nil, "name" => "test", "options" => []}]
     assert request.notifications_config == payload[:notifications_config] 
+    assert request.aws_config == payload[:aws_config] 
   end  
 end
