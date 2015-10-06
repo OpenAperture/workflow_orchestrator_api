@@ -19,6 +19,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
 	  	deployable_units: [%{"name" => "test", "options" => []}],
       notifications_config: "notifications_config",
       aws_config: %{"name" => "test"},
+      ecs_task_definition: "something something"
   	}
 
     request = Request.from_payload(payload)
@@ -37,6 +38,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert request.deployable_units == [%FleetApi.Unit{currentState: nil, desiredState: nil, machineID: nil, name: "test", options: []}]
     assert request.notifications_config == payload[:notifications_config] 
     assert request.aws_config == payload[:aws_config] 
+    assert request.ecs_task_definition == payload[:ecs_task_definition]
   end
 
   test "to_payload" do
@@ -71,5 +73,6 @@ defmodule OpenAperture.WorkflowOrchestratorApi.RequestTest do
     assert payload[:deployable_units] == [%{"currentState" => nil, "desiredState" => nil, "machineID" => nil, "name" => "test", "options" => []}]
     assert request.notifications_config == payload[:notifications_config] 
     assert request.aws_config == payload[:aws_config] 
+    assert request.ecs_task_definition == payload[:ecs_task_definition]
   end  
 end

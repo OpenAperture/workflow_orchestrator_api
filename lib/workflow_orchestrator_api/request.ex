@@ -20,7 +20,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
             deployable_units:                    nil,
             notifications_config:                nil,
             fleet_config:                        nil,
-            aws_config:                          nil
+            aws_config:                          nil,
+            ecs_task_definition:                 nil
 
   @type t :: %__MODULE__{}
 
@@ -64,7 +65,8 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
       deployable_units:                   deployable_units,
       notifications_config:               payload[:notifications_config],
       fleet_config:                       payload[:fleet_config],
-      aws_config:                         payload[:aws_config]
+      aws_config:                         payload[:aws_config],
+      ecs_task_definition:                payload[:ecs_task_definition]
     }
   end
 
@@ -108,6 +110,7 @@ defmodule OpenAperture.WorkflowOrchestratorApi.Request do
       |> Map.put(:notifications_config, request.notifications_config)
       |> Map.put(:fleet_config, request.fleet_config)
       |> Map.put(:aws_config, request.aws_config)
+      |> Map.put(:ecs_task_definition, request.ecs_task_definition)
   end
 
   @spec initial_payload_from(OpenAperture.WorkflowOrchestratorApi.Request.t) :: map
